@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(const Quizzler());
+void main() => runApp(const Quizzy());
 
-class Quizzler extends StatelessWidget {
-  const Quizzler({super.key});
+class Quizzy extends StatelessWidget {
+  const Quizzy({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,33 +29,39 @@ class QuizPage extends StatefulWidget {
 }
 
 class QuizPageState extends State<QuizPage> {
+  var questions = <String>[
+    'You can lead a cow down stairs but not up stairs.',
+    'Approximately one quarter of human bones are in the feet.',
+    'A slug\'s blood is green.',
+  ];
+  var questionNumber = 0;
+  var scoreKeeper = <Icon>[];
+
   @override
   Widget build(BuildContext context) {
     return Column(
       // mainAxisAlignment: MainAxisAlignment.spaceBetween,
       // crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const Expanded(
+        Expanded(
           // flex: 5,
           child: Center(
             child: Text(
-              'This is where the question text will go.',
+              questions[questionNumber],
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 24.0,
                 color: Colors.white,
               ),
             ),
           ),
         ),
-        //TODO: Add a Row here as your score keeper
-        Row(
-          children: [
-            Icon(
-              Icons.check,
-              color: Colors.green,
-            ),
-          ],
+        SizedBox(
+          height: 24.0,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: scoreKeeper,
+          ),
         ),
         Row(
           children: [
@@ -64,7 +70,6 @@ class QuizPageState extends State<QuizPage> {
                 padding: const EdgeInsets.all(16.0),
                 child: TextButton(
                   style: ButtonStyle(
-                    foregroundColor: MaterialStateProperty.all(Colors.white),
                     backgroundColor: MaterialStateProperty.all(Colors.green),
                   ),
                   child: const Padding(
@@ -79,6 +84,15 @@ class QuizPageState extends State<QuizPage> {
                   ),
                   onPressed: () {
                     //The user picked true.
+                    setState(() {
+                      questionNumber += questionNumber;
+                      scoreKeeper.add(
+                        const Icon(
+                          Icons.check,
+                          color: Colors.green,
+                        ),
+                      );
+                    });
                   },
                 ),
               ),
@@ -101,6 +115,14 @@ class QuizPageState extends State<QuizPage> {
                   ),
                   onPressed: () {
                     //The user picked false.
+                    setState(() {
+                      scoreKeeper.add(
+                        const Icon(
+                          Icons.close,
+                          color: Colors.red,
+                        ),
+                      );
+                    });
                   },
                 ),
               ),
