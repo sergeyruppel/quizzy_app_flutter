@@ -30,7 +30,16 @@ class QuizPage extends StatefulWidget {
 }
 
 class QuizPageState extends State<QuizPage> {
-  final quizLogic = QuizLogic();
+  final questions = <String>[
+    'You can lead a cow down stairs but not up stairs.',
+    'Approximately one quarter of human bones are in the feet.',
+    'A slug\'s blood is green.',
+  ];
+  final answers = <bool>[
+    false,
+    true,
+    true,
+  ];
   var questionNumber = 0;
   var scoreKeeper = <Icon>[];
 
@@ -44,7 +53,7 @@ class QuizPageState extends State<QuizPage> {
           // flex: 5,
           child: Center(
             child: Text(
-              quizLogic.questionList[questionNumber].questionText,
+              questions[questionNumber],
               textAlign: TextAlign.center,
               style: const TextStyle(
                 fontSize: 24.0,
@@ -81,7 +90,7 @@ class QuizPageState extends State<QuizPage> {
                   ),
                   onPressed: () {
                     //The user picked true.
-                    if (quizLogic.questionList[questionNumber].questionAnswer) {
+                    if (answers[questionNumber]) {
                       setState(() {
                         scoreKeeper.add(
                           const Icon(
@@ -89,7 +98,6 @@ class QuizPageState extends State<QuizPage> {
                             color: Colors.green,
                           ),
                         );
-                        questionNumber += 1;
                       });
                     } else {
                       setState(() {
@@ -99,7 +107,6 @@ class QuizPageState extends State<QuizPage> {
                             color: Colors.red,
                           ),
                         );
-                        questionNumber += 1;
                       });
                     }
                   },
@@ -125,17 +132,7 @@ class QuizPageState extends State<QuizPage> {
                   ),
                   onPressed: () {
                     //The user picked false.
-                    if (quizLogic.questionList[questionNumber].questionAnswer) {
-                      setState(() {
-                        scoreKeeper.add(
-                          const Icon(
-                            Icons.check,
-                            color: Colors.green,
-                          ),
-                        );
-                        questionNumber += 1;
-                      });
-                    } else {
+                    if (!answers[questionNumber]) {
                       setState(() {
                         scoreKeeper.add(
                           const Icon(
@@ -143,7 +140,6 @@ class QuizPageState extends State<QuizPage> {
                             color: Colors.red,
                           ),
                         );
-                        questionNumber += 1;
                       });
                     }
                   },
