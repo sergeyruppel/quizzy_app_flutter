@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quizzy_app_flutter/quiz_logic.dart';
 
 void main() => runApp(const Quizzy());
 
@@ -29,16 +30,7 @@ class QuizPage extends StatefulWidget {
 }
 
 class QuizPageState extends State<QuizPage> {
-  final questions = <String>[
-    'You can lead a cow down stairs but not up stairs.',
-    'Approximately one quarter of human bones are in the feet.',
-    'A slug\'s blood is green.',
-  ];
-  final answers = <bool>[
-    false,
-    true,
-    true,
-  ];
+  final quizLogic = QuizLogic();
   var questionNumber = 0;
   var scoreKeeper = <Icon>[];
 
@@ -52,7 +44,7 @@ class QuizPageState extends State<QuizPage> {
           // flex: 5,
           child: Center(
             child: Text(
-              questions[questionNumber],
+              quizLogic.questionList[questionNumber].questionText,
               textAlign: TextAlign.center,
               style: const TextStyle(
                 fontSize: 24.0,
@@ -89,7 +81,7 @@ class QuizPageState extends State<QuizPage> {
                   ),
                   onPressed: () {
                     //The user picked true.
-                    if (answers[questionNumber]) {
+                    if (quizLogic.questionList[questionNumber].questionAnswer) {
                       setState(() {
                         scoreKeeper.add(
                           const Icon(
@@ -119,7 +111,8 @@ class QuizPageState extends State<QuizPage> {
                 padding: const EdgeInsets.all(16.0),
                 child: TextButton(
                   style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.red)),
+                    backgroundColor: MaterialStateProperty.all(Colors.red),
+                  ),
                   child: const Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Text(
@@ -132,7 +125,17 @@ class QuizPageState extends State<QuizPage> {
                   ),
                   onPressed: () {
                     //The user picked false.
-                    if (!answers[questionNumber]) {
+                    if (quizLogic.questionList[questionNumber].questionAnswer) {
+                      setState(() {
+                        scoreKeeper.add(
+                          const Icon(
+                            Icons.check,
+                            color: Colors.green,
+                          ),
+                        );
+                        questionNumber += 1;
+                      });
+                    } else {
                       setState(() {
                         scoreKeeper.add(
                           const Icon(
@@ -153,9 +156,3 @@ class QuizPageState extends State<QuizPage> {
     );
   }
 }
-
-/*
-question1: 'You can lead a cow down stairs but not up stairs.', false,
-question2: 'Approximately one quarter of human bones are in the feet.', true,
-question3: 'A slug\'s blood is green.', true,
-*/
