@@ -30,17 +30,8 @@ class QuizPage extends StatefulWidget {
 }
 
 class QuizPageState extends State<QuizPage> {
-  final questions = <String>[
-    'You can lead a cow down stairs but not up stairs.',
-    'Approximately one quarter of human bones are in the feet.',
-    'A slug\'s blood is green.',
-  ];
-  final answers = <bool>[
-    false,
-    true,
-    true,
-  ];
-  var questionNumber = 0;
+  final quizLogic = QuizLogic();
+
   var scoreKeeper = <Icon>[];
 
   @override
@@ -53,7 +44,7 @@ class QuizPageState extends State<QuizPage> {
           // flex: 5,
           child: Center(
             child: Text(
-              questions[questionNumber],
+              quizLogic.getQuestionText(),
               textAlign: TextAlign.center,
               style: const TextStyle(
                 fontSize: 24.0,
@@ -90,7 +81,7 @@ class QuizPageState extends State<QuizPage> {
                   ),
                   onPressed: () {
                     //The user picked true.
-                    if (answers[questionNumber]) {
+                    if (quizLogic.getQuestionAnswer()) {
                       setState(() {
                         scoreKeeper.add(
                           const Icon(
@@ -132,7 +123,16 @@ class QuizPageState extends State<QuizPage> {
                   ),
                   onPressed: () {
                     //The user picked false.
-                    if (!answers[questionNumber]) {
+                    if (!quizLogic.getQuestionAnswer()) {
+                      setState(() {
+                        scoreKeeper.add(
+                          const Icon(
+                            Icons.check,
+                            color: Colors.green,
+                          ),
+                        );
+                      });
+                    } else {
                       setState(() {
                         scoreKeeper.add(
                           const Icon(
