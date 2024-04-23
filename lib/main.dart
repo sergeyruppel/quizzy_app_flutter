@@ -100,6 +100,7 @@ class QuizPageState extends State<QuizPage> {
                         );
                       });
                     }
+                    quizLogic.nextQuestion();
                   },
                 ),
               ),
@@ -142,6 +143,7 @@ class QuizPageState extends State<QuizPage> {
                         );
                       });
                     }
+                    quizLogic.nextQuestion();
                   },
                 ),
               ),

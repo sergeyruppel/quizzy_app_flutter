@@ -60,6 +60,8 @@ class QuizLogic {
   void nextQuestion() {
     if (_questionNumber < _questionList.length - 1) {
       _questionNumber += 1;
+    } else {
+      _questionNumber = 0;
     }
   }
 
