@@ -67,7 +67,7 @@ class QuizPageState extends State<QuizPage> {
                 padding: const EdgeInsets.all(16.0),
                 child: TextButton(
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.green),
+                    backgroundColor: WidgetStateProperty.all(Colors.green),
                   ),
                   child: const Padding(
                     padding: EdgeInsets.all(8.0),
@@ -110,7 +110,7 @@ class QuizPageState extends State<QuizPage> {
                 padding: const EdgeInsets.all(16.0),
                 child: TextButton(
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.red),
+                    backgroundColor: WidgetStateProperty.all(Colors.red),
                   ),
                   child: const Padding(
                     padding: EdgeInsets.all(8.0),
