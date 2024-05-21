@@ -41,7 +41,6 @@ class QuizPageState extends State<QuizPage> {
       // crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Expanded(
-          // flex: 5,
           child: Center(
             child: Text(
               quizLogic.getQuestionText(),
@@ -50,6 +49,16 @@ class QuizPageState extends State<QuizPage> {
                 fontSize: 24.0,
                 color: Colors.white,
               ),
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 24.0,
+          child: Text(
+            quizLogic.getUserScore(),
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              color: Colors.white,
             ),
           ),
         ),

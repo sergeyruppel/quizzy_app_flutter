@@ -2,6 +2,8 @@ import 'package:quizzy_app_flutter/question.dart';
 
 class QuizLogic {
   var _questionNumber = 0;
+  var _userScore = 0;
+
   final _questionList = <Question>[
     Question('Some cats are actually allergic to humans', true),
     Question('You can lead a cow down stairs but not up stairs.', false),
@@ -35,10 +37,18 @@ class QuizLogic {
       _questionNumber += 1;
     } else {
       _questionNumber = 0;
+      _userScore = 0;
     }
   }
 
   String getQuestionText() => _questionList[_questionNumber].questionText;
 
   bool getQuestionAnswer() => _questionList[_questionNumber].questionAnswer;
+
+  String getUserScore() {
+    if (_questionList[_questionNumber].questionAnswer) {
+      _userScore += 1;
+    }
+    return 'Score: $_userScore';
+  }
 }
