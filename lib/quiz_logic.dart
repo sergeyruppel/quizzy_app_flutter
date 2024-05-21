@@ -38,11 +38,7 @@ class QuizLogic {
     }
   }
 
-  String getQuestionText() {
-    return _questionList[_questionNumber].questionText;
-  }
+  String getQuestionText() => _questionList[_questionNumber].questionText;
 
-  bool getQuestionAnswer() {
-    return _questionList[_questionNumber].questionAnswer;
-  }
+  bool getQuestionAnswer() => _questionList[_questionNumber].questionAnswer;
 }
