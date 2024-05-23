@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:quizzy_app_flutter/question.dart';
 
 class QuizLogic {
@@ -32,7 +33,7 @@ class QuizLogic {
         true),
   ];
 
-  void nextQuestion() {
+  void updateQuestion() {
     if (_questionNumber < _questionList.length - 1) {
       _questionNumber += 1;
     } else {
@@ -43,12 +44,21 @@ class QuizLogic {
 
   String getQuestionText() => _questionList[_questionNumber].questionText;
 
-  bool getQuestionAnswer() => _questionList[_questionNumber].questionAnswer;
+  Icon checkAnswer(bool userAnswer) {
+    if (userAnswer == _questionList[_questionNumber].questionAnswer) {
+      return const Icon(Icons.check, color: Colors.green);
+    } else {
+      return const Icon(Icons.close, color: Colors.red);
+    }
+  }
+
+  int getQuestionCount() => _questionList.length;
 
   String getUserScore() {
     if (_questionList[_questionNumber].questionAnswer) {
       _userScore += 1;
     }
-    return 'Score: $_userScore';
+    // return 'Your score: $_userScore/${_questionList.length}';
+    return '$_userScore';
   }
 }

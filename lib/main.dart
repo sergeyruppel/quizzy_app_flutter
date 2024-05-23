@@ -34,6 +34,53 @@ class QuizPageState extends State<QuizPage> {
 
   var scoreKeeper = <Icon>[];
 
+  // Future<void> showMyDialog() async {
+  //   return showDialog<void>(
+  //     context: context,
+  //     barrierDismissible: false,
+  //     builder: (BuildContext context) {
+  //       return AlertDialog(
+  //         title: const Text('AlertDialog Title'),
+  //         content: const SingleChildScrollView(
+  //           child: ListBody(
+  //             children: <Widget>[
+  //               Text('This is a demo alert dialog.'),
+  //               Text('Would you like to approve of this message?'),
+  //             ],
+  //           ),
+  //         ),
+  //         actions: <Widget>[
+  //           TextButton(
+  //             child: const Text('Approve'),
+  //             onPressed: () {
+  //               Navigator.of(context).pop();
+  //             },
+  //           ),
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }
+  Future<String?> showAlert(BuildContext context) {
+    return showDialog<String>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text('Finished!'),
+        content: Text(quizLogic.getUserScore()),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context, 'OK');
+              print(quizLogic.getUserScore());
+            },
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -52,15 +99,9 @@ class QuizPageState extends State<QuizPage> {
             ),
           ),
         ),
-        SizedBox(
-          height: 24.0,
-          child: Text(
-            quizLogic.getUserScore(),
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              color: Colors.white,
-            ),
-          ),
+        TextButton(
+          onPressed: () => showAlert(context),
+          child: const Text('Show Dialog'),
         ),
         SizedBox(
           height: 24.0,
@@ -90,26 +131,10 @@ class QuizPageState extends State<QuizPage> {
                   ),
                   onPressed: () {
                     //The user picked true.
-                    if (quizLogic.getQuestionAnswer()) {
-                      setState(() {
-                        scoreKeeper.add(
-                          const Icon(
-                            Icons.check,
-                            color: Colors.green,
-                          ),
-                        );
-                      });
-                    } else {
-                      setState(() {
-                        scoreKeeper.add(
-                          const Icon(
-                            Icons.close,
-                            color: Colors.red,
-                          ),
-                        );
-                      });
-                    }
-                    quizLogic.nextQuestion();
+                    setState(() {
+                      scoreKeeper.add(quizLogic.checkAnswer(true));
+                    });
+                    quizLogic.updateQuestion();
                   },
                 ),
               ),
@@ -133,26 +158,10 @@ class QuizPageState extends State<QuizPage> {
                   ),
                   onPressed: () {
                     //The user picked false.
-                    if (!quizLogic.getQuestionAnswer()) {
-                      setState(() {
-                        scoreKeeper.add(
-                          const Icon(
-                            Icons.check,
-                            color: Colors.green,
-                          ),
-                        );
-                      });
-                    } else {
-                      setState(() {
-                        scoreKeeper.add(
-                          const Icon(
-                            Icons.close,
-                            color: Colors.red,
-                          ),
-                        );
-                      });
-                    }
-                    quizLogic.nextQuestion();
+                    setState(() {
+                      scoreKeeper.add(quizLogic.checkAnswer(false));
+                    });
+                    quizLogic.updateQuestion();
                   },
                 ),
               ),
