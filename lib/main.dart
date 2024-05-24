@@ -61,8 +61,9 @@ class QuizPageState extends State<QuizPage> {
   //     },
   //   );
   // }
-  Future<String?> showAlert(BuildContext context) {
-    return showDialog<String>(
+
+  Future<void> showAlert(BuildContext context) {
+    return showDialog<void>(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) => AlertDialog(
@@ -99,10 +100,6 @@ class QuizPageState extends State<QuizPage> {
             ),
           ),
         ),
-        TextButton(
-          onPressed: () => showAlert(context),
-          child: const Text('Show Dialog'),
-        ),
         SizedBox(
           height: 24.0,
           child: Row(
@@ -123,10 +120,7 @@ class QuizPageState extends State<QuizPage> {
                     padding: EdgeInsets.all(8.0),
                     child: Text(
                       'True',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18.0,
-                      ),
+                      style: TextStyle(color: Colors.white, fontSize: 18.0),
                     ),
                   ),
                   onPressed: () {
@@ -134,6 +128,9 @@ class QuizPageState extends State<QuizPage> {
                     setState(() {
                       scoreKeeper.add(quizLogic.checkAnswer(true));
                     });
+                    if (quizLogic.shouldShowAlert()) {
+                      showAlert(context);
+                    }
                     quizLogic.updateQuestion();
                   },
                 ),
@@ -150,10 +147,7 @@ class QuizPageState extends State<QuizPage> {
                     padding: EdgeInsets.all(8.0),
                     child: Text(
                       'False',
-                      style: TextStyle(
-                        fontSize: 18.0,
-                        color: Colors.white,
-                      ),
+                      style: TextStyle(fontSize: 18.0, color: Colors.white),
                     ),
                   ),
                   onPressed: () {

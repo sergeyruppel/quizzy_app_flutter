@@ -58,7 +58,11 @@ class QuizLogic {
     if (_questionList[_questionNumber].questionAnswer) {
       _userScore += 1;
     }
-    // return 'Your score: $_userScore/${_questionList.length}';
-    return '$_userScore';
+    return 'Your score: $_userScore/${_questionList.length}';
+    // return '$_userScore';
   }
+
+  bool shouldShowAlert() =>
+      // _questionNumber == _questionList.length - 1 ? true : false;
+      _questionNumber == _questionList.length - 1 ? true : false;
 }
