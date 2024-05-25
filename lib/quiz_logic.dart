@@ -46,23 +46,15 @@ class QuizLogic {
 
   Icon checkAnswer(bool userAnswer) {
     if (userAnswer == _questionList[_questionNumber].questionAnswer) {
+      _userScore += 1;
       return const Icon(Icons.check, color: Colors.green);
     } else {
       return const Icon(Icons.close, color: Colors.red);
     }
   }
 
-  int getQuestionCount() => _questionList.length;
-
-  String getUserScore() {
-    if (_questionList[_questionNumber].questionAnswer) {
-      _userScore += 1;
-    }
-    return 'Your score: $_userScore/${_questionList.length}';
-    // return '$_userScore';
-  }
-
   bool shouldShowAlert() =>
-      // _questionNumber == _questionList.length - 1 ? true : false;
-      _questionNumber == _questionList.length - 1 ? true : false;
+      _questionNumber + 1 == _questionList.length ? true : false;
+
+  String getUserScore() => 'Your score: $_userScore/${_questionList.length}';
 }

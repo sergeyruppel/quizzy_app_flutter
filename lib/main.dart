@@ -34,34 +34,6 @@ class QuizPageState extends State<QuizPage> {
 
   var scoreKeeper = <Icon>[];
 
-  // Future<void> showMyDialog() async {
-  //   return showDialog<void>(
-  //     context: context,
-  //     barrierDismissible: false,
-  //     builder: (BuildContext context) {
-  //       return AlertDialog(
-  //         title: const Text('AlertDialog Title'),
-  //         content: const SingleChildScrollView(
-  //           child: ListBody(
-  //             children: <Widget>[
-  //               Text('This is a demo alert dialog.'),
-  //               Text('Would you like to approve of this message?'),
-  //             ],
-  //           ),
-  //         ),
-  //         actions: <Widget>[
-  //           TextButton(
-  //             child: const Text('Approve'),
-  //             onPressed: () {
-  //               Navigator.of(context).pop();
-  //             },
-  //           ),
-  //         ],
-  //       );
-  //     },
-  //   );
-  // }
-
   Future<void> showAlert(BuildContext context) {
     return showDialog<void>(
       context: context,
@@ -72,10 +44,18 @@ class QuizPageState extends State<QuizPage> {
         actions: <Widget>[
           TextButton(
             onPressed: () {
-              Navigator.pop(context, 'OK');
-              print(quizLogic.getUserScore());
+              setState(() {
+                Navigator.pop(context, 'OK');
+                scoreKeeper.clear();
+                quizLogic.updateQuestion();
+              });
             },
-            child: const Text('OK'),
+            child: const Text(
+              'OK',
+              style: TextStyle(
+                color: Colors.green,
+              ),
+            ),
           ),
         ],
       ),
@@ -93,10 +73,7 @@ class QuizPageState extends State<QuizPage> {
             child: Text(
               quizLogic.getQuestionText(),
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 24.0,
-                color: Colors.white,
-              ),
+              style: const TextStyle(fontSize: 24.0, color: Colors.white),
             ),
           ),
         ),
@@ -130,8 +107,9 @@ class QuizPageState extends State<QuizPage> {
                     });
                     if (quizLogic.shouldShowAlert()) {
                       showAlert(context);
+                    } else {
+                      quizLogic.updateQuestion();
                     }
-                    quizLogic.updateQuestion();
                   },
                 ),
               ),
@@ -155,7 +133,11 @@ class QuizPageState extends State<QuizPage> {
                     setState(() {
                       scoreKeeper.add(quizLogic.checkAnswer(false));
                     });
-                    quizLogic.updateQuestion();
+                    if (quizLogic.shouldShowAlert()) {
+                      showAlert(context);
+                    } else {
+                      quizLogic.updateQuestion();
+                    }
                   },
                 ),
               ),
