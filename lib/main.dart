@@ -44,8 +44,8 @@ class QuizPageState extends State<QuizPage> {
         actions: <Widget>[
           TextButton(
             onPressed: () {
+              Navigator.pop(context, 'OK');
               setState(() {
-                Navigator.pop(context, 'OK');
                 scoreKeeper.clear();
                 quizLogic.updateQuestion();
               });
@@ -101,7 +101,6 @@ class QuizPageState extends State<QuizPage> {
                     ),
                   ),
                   onPressed: () {
-                    //The user picked true.
                     setState(() {
                       scoreKeeper.add(quizLogic.checkAnswer(true));
                     });
@@ -129,7 +128,6 @@ class QuizPageState extends State<QuizPage> {
                     ),
                   ),
                   onPressed: () {
-                    //The user picked false.
                     setState(() {
                       scoreKeeper.add(quizLogic.checkAnswer(false));
                     });
